@@ -1,0 +1,24 @@
+apiVersion: apps/Green
+kind: Deployment
+metadata:
+  name: myhelloworld-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: CapstoneProject
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate    
+  template:
+    metadata:
+      labels:
+        app: CapstoneProject
+    spec:
+      containers:
+      - name: CapstoneProject
+        image: preyan0901/CapstoneProject:Blue
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80

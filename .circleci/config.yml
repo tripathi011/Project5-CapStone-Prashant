@@ -1,0 +1,156 @@
+version: 2.1
+
+jobs:
+  build-docker-image:
+    docker:
+      - image: circleci/python:3.7.3
+    working_directory: ~/repo
+    # Checkout 
+    steps:
+      - checkout
+      # Install Dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+            - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv ~/.devops
+            . devops/bin/activate
+            make install
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+
+      - run:
+          name: run lint
+          command: |
+            . devops/bin/activate
+            make lint           
+            
+  deploy-docker-image:           
+    environment:
+      IMAGE_VERSION: Blue
+    docker:
+      - image: circleci/golang:1.15
+     
+    steps:
+      - checkout
+      - setup_remote_docker
+
+      # build and push Docker image
+      - run:
+          name: Build Docker Image
+          command: |
+            docker build -t $IMAGENAME:$IMAGEVERSION .
+      - run:
+          name: List Docker Image
+          command: |
+            docker image ls
+      - run:
+          name: upload docker code   
+          command: |
+            docker image ls	 
+            docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
+            dockerpath=$IMAGENAME:$IMAGEVERSION
+            docker push $dockerpath
+
+            
+  eks_delpoy:
+    #Image
+    docker:
+      - image: python:3.7.3-stretch
+    # Checkout
+    steps:
+      - checkout
+      - run:
+          name: awscli Authenticator Installation
+          command: |
+          # installing AWS CLI & IAM Authenticator
+            pip3 install awscli
+            curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/aws-iam-authenticator
+            chmod +x ./aws-iam-authenticator
+            mv ./aws-iam-authenticator /usr/local/bin/aws-iam-authenticator
+  
+      - run:
+          name: kubectl Installation
+          command: |
+            curl -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.13.7/2019-06-11/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
+            mv ./kubectl /usr/local/bin/kubectl
+           
+      - run:
+          name: eksctl Installation
+          command: |
+            curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+            mv /tmp/eksctl /usr/local/bin
+           
+      - run:
+          name: EKS cluster Creation
+          command: |
+            aws cloudformation list-exports > cluster.txt
+            cat cluster.txt
+            if [ $(grep -i "eksctl-capstoneproject" cluster.txt | wc -l) -ge 1 ]
+              then
+              echo "already EKS Cluster exists in environment"
+              else
+              echo "creating the EKS Cluster"
+              eksctl create cluster --name $EKSCLUSTER_NAME --version 1.19 --region $AWS_REGION --zones us-east-1a,us-east-1b,us-east-1c --nodegroup-name eksudanodegrp --node-type t2.micro --nodes-min 2 --nodes-max 4 --managed
+            fi
+            
+  eks_app_deploy:
+    #Image
+    docker:
+      - image: python:3.7.3-stretch
+      
+    steps:
+    #Checkout 
+      - checkout
+      - run:
+          name: awscli installation
+          # installing AWS  CLI & IAM Authenticator
+          command: |
+            pip3 install awscli
+            curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/aws-iam-authenticator
+            chmod +x ./aws-iam-authenticator
+            mv ./aws-iam-authenticator /usr/local/bin/aws-iam-authenticator
+  
+      - run:
+          name: kubectl installation
+          command: |
+            curl -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.13.7/2019-06-11/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
+            mv ./kubectl /usr/local/bin/kubectl
+           
+      - run:
+          name: eksctl Installation
+          command: |
+            curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+            mv /tmp/eksctl /usr/local/bin
+            
+      - run:
+          name: deploy the docker container in aws eks cluster
+          command: |
+            aws eks --region $AWS_REGION update-kubeconfig --name $EKSCLUSTER_NAME
+            kubectl apply -f my_hello_world_deployment.yml
+            kubectl get nodes
+            kubectl get deployment
+            kubectl get pod -o wide
+            kubectl apply -f my_hello_world_svc.yml
+            kubectl get services
+            kubectl rollout status deployments/capstoneproject
+            kubectl describe svc capstoneproject
+            
+workflows:
+  version:  2.1
+  default:
+    jobs:
+      - build-docker-image
+      - deploy-docker-image:
+          requires: [build-docker-image]
+      - eks_delpoy:
+          requires: [deploy-docker-image]
+      - eks_app_deploy:
+         requires: [eks_delpoy]         
