@@ -8,7 +8,7 @@ jobs:
     # Checkout 
     steps:
       - checkout
-      # Install Dependencies
+        # Install Dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "requirements.txt" }}
@@ -68,7 +68,7 @@ jobs:
       - run:
           name: awscli Authenticator Installation
           command: |
-          # installing AWS CLI & IAM Authenticator
+            # installing AWS CLI & IAM Authenticator
             pip3 install awscli
             curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/aws-iam-authenticator
             chmod +x ./aws-iam-authenticator
