@@ -127,6 +127,7 @@ jobs:
             chmod +x ./aws-iam-authenticator
             mv ./aws-iam-authenticator /usr/local/bin/aws-iam-authenticator
             aws configure list
+            aws cloudformation --region us-east-1 list-exports > cluster.txt
   
       - run:
           name: kubectl installation
@@ -144,7 +145,7 @@ jobs:
       - run:
           name: deploy the docker container in aws eks cluster
           command: |
-            aws eks --region $AWS_REGION update-kubeconfig --name $EKSCLUSTER_NAME
+            aws eks --region us-east-1 update-kubeconfig --name $EKSCLUSTER_NAME
             kubectl apply -f my_hello_world_deployment.yml
             kubectl get nodes
             kubectl get deployment
