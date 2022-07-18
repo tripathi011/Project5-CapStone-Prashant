@@ -55,7 +55,7 @@ jobs:
             docker image ls	 
             docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
             dockerpath=$IMAGENAME:$IMAGEVERSION
-            docker push preyan0901/$dockerpath
+            docker push $dockerpath
 
             
   eks_delpoy:
