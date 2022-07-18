@@ -28,7 +28,7 @@ jobs:
           name: run lint
           command: |
             . devops/bin/activate
-            make linti  
+            make lint
             
             
   deploy-docker-image:           
