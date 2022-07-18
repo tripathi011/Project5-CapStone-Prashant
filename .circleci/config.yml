@@ -54,7 +54,7 @@ jobs:
           command: |
             docker image ls	 
             docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
-            dockerpath=preyan0901/$IMAGENAME:$IMAGEVERSION
+            dockerpath=$IMAGENAME:$IMAGEVERSION
             docker push $dockerpath
 
             
