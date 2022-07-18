@@ -6,7 +6,7 @@ Submitted By: Prashant Kumar Tripathi
 Date of Submission: July 2022
 #####################################################################################################
 
-In this Project I am using below sets: 
+In this Project I am using below sets:
 
 1) AWS 
 2) GitHUB: version control tool
