@@ -77,7 +77,7 @@ jobs:
             curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/aws-iam-authenticator
             chmod +x ./aws-iam-authenticator
             mv ./aws-iam-authenticator /usr/local/bin/aws-iam-authenticator
-            echo ACCESS_ID=$ACCESS_ID
+            echo ACCESS_KEY_ID=$ACCESS_KEY_ID
             echo SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY
          
       - run:
