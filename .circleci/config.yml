@@ -90,7 +90,7 @@ jobs:
       - run:
           name: EKS cluster Creation
           command: |
-            aws cloudformation list-exports > cluster.txt
+            aws cloudformation --region $AWS_REGION list-exports > cluster.txt
             cat cluster.txt
             if [ $(grep -i "eksctl-capstoneproject" cluster.txt | wc -l) -ge 1 ]
               then
