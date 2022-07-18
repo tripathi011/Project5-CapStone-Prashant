@@ -1,12 +1,11 @@
-#####################################################################################################
+###########################################################################################
 Project Name: CapstoneFinalProject
-Programe: Cloud DevOps Nano-Degree 
+Programe: Cloud DevOps Nano-Degree (Udacity)
 
 Submitted By: Prashant Kumar Tripathi
-Date of Submission: July 2022
-#####################################################################################################
+Date of Submission: 18 July 2022
 
-In this Project I am using below sets:
+this project is using below tools and technologies
 
 1) AWS 
 2) GitHUB: version control tool
@@ -15,9 +14,9 @@ In this Project I am using below sets:
 5) Building Kubernetes clusters
 6) Python
 
-#######################################################################################################
+###########################################################################################
 Steps to Deply my Application
-#######################################################################################################
+###########################################################################################
 
 
 Step-1) Tested docker file using hadolint
@@ -32,24 +31,24 @@ Step-5) Deploy a docker container from a docker HUB
 
 Step-5) Application is deployed and running on EKS cluster
 
-Step-6) Now, there is an update to the webpage and it has to be re-deployed. The challenge is what type of deployment strategy needed to use
-so that the clients faces the minimal downtime. In this application I am using rolling update strategy. It is a gradual process that allows 
-you to update your Kubernetes system with only a minor effect on performance and no downtime.In this strategy, the Deployment selects a Pod 
+Step-6) Now...there is an update to the webpage and it has to be re-deployed. Just to minimsse the downtime for the users I am using rolling update strategy. 
+It is a gradual process that allows you to update your Kubernetes system with only a minor effect on performance and no downtime. In this strategy, the Deployment selects a Pod 
 with the old programming, deactivates it, and creates an updated Pod to replace it.
 
-Step-7) Firstly, as a best practice ensure to take a backup of old application either using version control etc
-Here I have used to tagging approach to TAG the docker image as Green/Blue. So in case of roll back can change the build order version and 
+Step-7) Take backup and use the tagging approach to TAG the docker image as V1,V2,V3 etc. So in case of roll back can change the build order version and 
 re-apply the settings
    
-Step-8) Green tag is old-application, Blue tag us updated version 
+Step-8) v1 tag is old-application, v2 tag us updated version 
 
-Step-9) Once the Blue is ready, push it to docker hub with Blue tag. Modify the Kubernetes configuration to pull
+Step-9) Once the v2 is ready, push it to docker hub with v2 tag. Modify the Kubernetes configuration to pull
     updated version, then add the rolling strategy configuration so whenvever a changes in application it uses
     rolling update strategy to redeploy a update code
 
 Step-10) CircleCI is being used to deploy the latest version by pulling the code gitrepo
 
-#######################################################################################################
+###########################################################################################
 Output (ULRs)
-#######################################################################################################
+###########################################################################################
+
+GitHub Url: https://github.com/tripathi011/Project5-CapStone-Prashant
 

@@ -1,7 +1,7 @@
-apiVersion: apps/Green
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myhelloworld-deployment
+  name: CapstoneProject
 spec:
   replicas: 2
   selector:
@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: CapstoneProject
-        image: preyan0901/CapstoneProject:Blue
+        image: preyan0901/CapstoneProject:v1
         imagePullPolicy: Always
         ports:
         - containerPort: 80

@@ -1,5 +1,5 @@
 # Create Load balancer
-apiVersion: Green
+apiVersion: v1
 kind: Service
 metadata:
   name: CapstoneProject
