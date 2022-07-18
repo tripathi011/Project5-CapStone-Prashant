@@ -32,7 +32,7 @@ jobs:
             
   deploy-docker-image:           
     environment:
-      IMAGE_VERSION: Blue
+      IMAGEVERSION: Blue
     docker:
       - image: circleci/golang:1.15
      
@@ -54,7 +54,7 @@ jobs:
           command: |
             docker image ls	 
             docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
-            dockerpath=$IMAGENAME:$IMAGEVERSION
+            dockerpath=preyan0901/$IMAGENAME:$IMAGEVERSION
             docker push $dockerpath
 
             
