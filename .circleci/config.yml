@@ -39,7 +39,7 @@ jobs:
      
     steps:
       - checkout
-      - setup_rdocker
+      - setup_remote_docker
       - run:
           name: Building Docker Image
           command: |
