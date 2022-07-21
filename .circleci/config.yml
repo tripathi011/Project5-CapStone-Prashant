@@ -152,15 +152,18 @@ jobs:
             kubectl rollout status deployments/capstoneproject
             kubectl describe svc capstoneproject
             
+   Check_Status: 
+    kubectl rollout status deployments/capstoneproject   
+            
 workflows:
   version:  2.1
   default:
     jobs:
-      - build-docker-image
-      - deploy-docker-image:
-          requires: [build-docker-image]
-      - eks_delpoy:
-          requires: [deploy-docker-image]
-      - eks_app_deploy:
-         requires: [eks_delpoy]
-         
+      #- build-docker-image
+      #- deploy-docker-image:
+      #    requires: [build-docker-image]
+      #- eks_delpoy:
+      #    requires: [deploy-docker-image]
+      #- eks_app_deploy:
+      #   requires: [eks_delpoy]
+       - Check_Status 
