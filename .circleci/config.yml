@@ -30,28 +30,26 @@ jobs:
             . devops/bin/activate
             make lint
             
-            
+  # Deploy docker           
   deploy-docker-image:           
     environment:
-      IMAGEVERSION: v2
+      IMAGEVERSION: v1
     docker:
       - image: circleci/golang:1.15
      
     steps:
       - checkout
-      - setup_remote_docker
-
-      # build and push Docker image
+      - setup_rdocker
       - run:
-          name: Build Docker Image
+          name: Building Docker Image
           command: |
             docker build -t $IMAGENAME:$IMAGEVERSION .
       - run:
-          name: List Docker Image
+          name: Listing Docker Image
           command: |
             docker image ls
       - run:
-          name: upload docker code   
+          name: uploading docker code   
           command: |
             docker image ls	 
             docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
@@ -104,9 +102,9 @@ jobs:
             cat cluster.txt
             if [ $(grep -i "eksctl-capstoneproject" cluster.txt | wc -l) -ge 1 ]
               then
-              echo "already EKS Cluster exists in environment"
+              echo "EKS Cluster already exists in environment"
               else
-              echo "creating the EKS Cluster"
+              echo "creating EKS Cluster"
               eksctl create cluster --name $EKSCLUSTER_NAME --version 1.19 --region us-east-1 --zones us-east-1a,us-east-1b,us-east-1c --nodegroup-name eksudanodegrp --node-type t2.micro --nodes-min 2 --nodes-max 4 --managed
             fi
             
@@ -127,7 +125,6 @@ jobs:
             chmod +x ./aws-iam-authenticator
             mv ./aws-iam-authenticator /usr/local/bin/aws-iam-authenticator
             aws configure list
-            aws cloudformation --region us-east-1 list-exports > cluster.txt
   
       - run:
           name: kubectl installation

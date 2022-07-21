@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    name = request.args.get("name", "This is capstone Project - Prashant - V1")
+    name = request.args.get("name", "This is capstone Project - by Prashant - V1")
     return f'Hello, {escape(name)}!'
 		   
 if __name__ == "__main__":
