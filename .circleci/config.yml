@@ -162,4 +162,5 @@ workflows:
       - eks_delpoy:
           requires: [deploy-docker-image]
       - eks_app_deploy:
-         requires: [eks_delpoy]         
+         requires: [eks_delpoy]
+         
