@@ -21,5 +21,5 @@ spec:
         image: preyan0901/capstoneproject:v1
         imagePullPolicy: Always
         ports:
-        - containerPort: 8000
+        - containerPort: 5000
         
