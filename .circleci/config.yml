@@ -149,7 +149,7 @@ jobs:
             kubectl get pod -o wide
             kubectl apply -f my_hello_world_svc.yml
             kubectl get services
-            # kubectl rollout status deployments/capstoneproject
+             # kubectl rollout status deployments/capstoneproject
             kubectl describe svc capstoneproject
             
 workflows:
