@@ -105,7 +105,7 @@ jobs:
               echo "EKS Cluster already exists in environment"
               else
               echo "creating EKS Cluster"
-              eksctl create cluster --name $EKSCLUSTER_NAME --version 1.19 --region us-east-1 --zones us-east-1a,us-east-1b,us-east-1c --nodegroup-name eksudanodegrp --node-type t2.micro --nodes-min 2 --nodes-max 4 --managed
+              eksctl create cluster --name $EKSCLUSTER_NAME --version 1.19 --region us-east-1 --zones us-east-1a,us-east-1b,us-east-1c --nodegroup-name eksudanodegrp --node-type t2.small --nodes-min 2 --nodes-max 4 --managed
             fi
             
   eks_app_deploy:
