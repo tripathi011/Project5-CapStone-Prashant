@@ -1,9 +1,11 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/tripathi011/Project5-capstone-Prashant/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/tripathi011/Project5-capstone-Prashant/tree/main)
+
 ###########################################################################################
 Project Name: CapstoneFinalProject
 Programe: Cloud DevOps Nano-Degree (Udacity)
 
 Submitted By: Prashant Kumar Tripathi
-Date of Submission: 18 July 2022
+Date of Submission: 22 July 2022
 
 this project is using below tools and technologies
 
@@ -35,7 +37,7 @@ Step-6) Now...there is an update to the webpage and it has to be re-deployed. Ju
 It is a gradual process that allows you to update your Kubernetes system with only a minor effect on performance and no downtime. In this strategy, the Deployment selects a Pod 
 with the old programming, deactivates it, and creates an updated Pod to replace it.
 
-Step-7) Take backup and use the tagging approach to TAG the docker image as V1,V2,V3 etc. So in case of roll back can change the build order version and 
+Step-7) Take backup and use the tagging approach to TAG the docker image as V1,V2,V3 etc. So in case of rollback can change the build order version and 
 re-apply the settings
    
 Step-8) v1 tag is old-application, v2 tag us updated version 
@@ -47,8 +49,12 @@ Step-9) Once the v2 is ready, push it to docker hub with v2 tag. Modify the Kube
 Step-10) CircleCI is being used to deploy the latest version by pulling the code gitrepo
 
 ###########################################################################################
-Output (ULRs)
+
+Output (LoadBalancer's URL)
+http://aaab3abe39ed747c8983318202537f26-1665053903.us-east-1.elb.amazonaws.com:5000/
+
+
 ###########################################################################################
 
-GitHub Url: https://github.com/tripathi011/Project5-CapStone-Prashant
+GitHub Url: https://github.com/tripathi011/Project5-capstone-Prashant
 
