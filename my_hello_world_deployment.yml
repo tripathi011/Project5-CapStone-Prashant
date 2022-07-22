@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: capstoneproject
-        image: preyan0901/capstoneproject:v1
+        image: preyan0901/my_hello_world:v1
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
