@@ -1,13 +1,11 @@
-# save this as app.py
-from flask import Flask, escape, request
+from flask import Flask
 
 app = Flask(__name__)
 
 @app.route('/')
-def hello():
-    name = request.args.get("name", "This is capstone Project - by Prashant - V1")
-    return f'Hello, {escape(name)}!'
-		   
-if __name__ == "__main__":
-    # load pretrained model as clf
-    app.run(host='0.0.0.0',debug=True) # removed port 80
+def hello_world():
+    return """
+	       <h1 style='color: blue;'>This is my capstone project v1 -- Prashant Tripathi</h1>
+           """
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", debug=True)
