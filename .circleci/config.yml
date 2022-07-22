@@ -143,12 +143,12 @@ jobs:
           name: deploy the docker container in aws eks cluster
           command: |
             aws eks --region us-east-1 update-kubeconfig --name $EKSCLUSTER_NAME
-              # kubectl apply -f my_hello_world_deployment.yml
+            kubectl apply -f my_hello_world_deployment.yml
             kubectl get nodes
             kubectl get deployment
             kubectl get pod -o wide
-              # kubectl apply -f my_hello_world_svc.yml
-              # kubectl get services
+            kubectl apply -f my_hello_world_svc.yml
+            kubectl get services
             kubectl rollout status deployments/capstoneproject
             kubectl describe svc capstoneproject
             
@@ -156,11 +156,10 @@ workflows:
   version:  2.1
   default:
     jobs:
-      #- build-docker-image
-      #- deploy-docker-image:
-      #    requires: [build-docker-image]
-      #- eks_delpoy:
-      #    requires: [deploy-docker-image]
-      #- eks_app_deploy:
-      #   requires: [eks_delpoy]
-      - eks_app_deploy
+      - build-docker-image
+      - deploy-docker-image:
+          requires: [build-docker-image]
+      - eks_delpoy:
+          requires: [deploy-docker-image]
+      - eks_app_deploy:
+         requires: [eks_delpoy]
