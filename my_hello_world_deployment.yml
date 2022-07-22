@@ -7,10 +7,6 @@ spec:
   selector:
     matchLabels:
       app: capstoneproject
-  strategy:
-    rollingUpdate:
-      maxUnavailable: 1
-    type: RollingUpdate    
   template:
     metadata:
       labels:
