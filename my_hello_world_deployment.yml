@@ -18,8 +18,8 @@ spec:
     spec:
       containers:
       - name: capstoneproject
-        image: preyan0901/capstoneproject:v1
+        image: kartdocker87/udaproject5:v2
         imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - containerPort: 5000
         
